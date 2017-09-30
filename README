@@ -1,0 +1,81 @@
+http://d.hatena.ne.jp/zariganitosh/20150224/escape_sequence
+\e = \033
+
+C++ : 8進数で033 から始まる文字列です
+
+C++言語ではiostreamで出力してターミナルを制御します
+
+std::cout << "\033[2J" << std::endl //画面クリア
+std::cout << "\033[0K" << std::endl //カーソル位置からその行の右端までをクリア
+std::cout << "\033[1K" << std::endl //カーソル位置からその行の左端までをクリア
+std::cout << "\033[2K" << std::endl //カーソル位置の行をクリア
+
+std::cout << "\033["<< x << ";" << y << "H" //カーソル位置を、高さx行目、横y行目に移動
+std::cout << "\033[" << x << "C" //カーソルをx行だけ右に移動
+std::cout << "\033[" << x << "D" //カーソルをx行だけ左に移動
+std::cout << "\033[" << x << "B" //カーソルをx行だけ下に移動
+std::cout << "\033[" << x << "A" //カーソルをx行だけ上に移動
+
+
+printf("\033[30m");//黒の文字に変更
+printf("\033[31m");//赤の文字に変更
+printf("\033[32m");//緑の文字に変更
+printf("\033[33m");//黄色の文字に変更
+printf("\033[34m");//青の文字に変更
+printf("\033[35m");//マゼンダの文字に変更
+printf("\033[36m");//シアンの文字に変更
+printf("\033[37m");//白の文字に変更
+printf("\033[39m");//文字の色を通常の色に戻す
+
+printf("\033[40m");//文字の背景を黒色に変更
+printf("\033[41m");//文字の背景を赤色に変更
+printf("\033[42m");//文字の背景を緑色に変更
+    
+他の背景色は上の文字の色の番号を参考にしてください。
+    
+printf("\033[49m");//文字の背景を通常に戻す
+
+
+などなどたくさんあります
+
+
+
+#include <stdio.h>
+
+#define clr     printf("\033[2J") //画面クリア
+#define clr_right       printf("\033[0K") //カーソル位置からその行の右端までをクリア
+#define clr_left        printf("\033[1K") //カーソル位置からその行の左端までをクリア
+#define clr_line        printf("\033[2K") //カーソル位置の行をクリア
+#define clr_right_n     printf("\033[nX") //カーソル位置の右側n文字空白に置き換え
+#define del_right_n     printf("\033[nP") //カーソル位置の右側n文字空白に置き換え
+
+#define location(x,y)   printf("\033[%d;%dH" ,x,y) //カーソル位置を移動
+#define right(x)        printf("\033[%dC" ,x) //カーソルを指定数だけ右に移動
+#define left(x)     printf("\033[%dD" ,x) //カーソルを指定数だけ左に移動
+#define down(x)     printf("\033[%dB" ,x) //カーソルを指定数だけ下に移動
+#define up(x)       printf("\033[%dA" ,x) //カーソルを指定数だけ上に移動
+
+main(){
+    int i;
+
+    clr;//画面クリア
+    for(i=0;i<100;i++){
+        location(10,20);//カーソル位置をheight 10 width 20に移動
+        printf("%d",i);
+        fflush(stdout);//バッファをフラッシュ
+        sleep(1);
+    }
+}
+
+
+カーソル移動
+i,jがカーソル位置
+
+        if(1>i) i=1;
+        if(1>j) j=1;
+        printf("\033[%d;%dH" ,j,i); //カーソル位置を移動
+        fflush(stdout);
+
+画面クリア
+        printf("\033[2J"); //画面クリア
+        fflush(stdout);
